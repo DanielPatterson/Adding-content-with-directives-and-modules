@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="">
+    
+    <title></title>
+
+    <style>
+	#wrap {font-family: arial; margin: 0 auto; width: 600px;}
+	</style>
+
+</head>
+
+<body>
+<div id="wrap" ng-app="myApp">
+    
+    <h3>Adding content with a directive</h3>
+    
+	<!--// Directive //-->
+	<div ng-controller="appCtrl"><div app-directive></div></div>
+    
+	<p><pre>&lt;div ng-controller="appCtrl"&gt;&lt;div app-directive&gt;&lt;/div&gt;&lt;/div&gt;</pre></p>
+    
+    <hr />
+    
+    <h3>Adding content with a module</h3>
+    <!--// Module //-->
+    <app-module></app-module> 
+      
+    <p><pre>&lt;app-module&gt;&lt;/app-module&gt;</pre></p> 
+    
+    <hr />
+</div>
+
+<div id="wrap">
+	
+    <h3>The JS</h3>
+       
+    <p><pre>angular.module('myApp', [
+	'appModule'
+]);
+
+angular.module('appModule', []);
+
+angular.module('appModule').component('appModule', {
+    
+templateUrl: 'template.html',
+
+controller: function appModuleController() {
+    
+    this.modulecopy = [
+        {
+        name: 'This content was added using a module'
+        }
+    ];
+
+}
+}).controller('appCtrl', ['$scope', function($scope) {
+	$scope.template = {
+		name: 'This content was added using a directive'
+	};
+}])
+.directive('appDirective', function() {
+	return {
+		template:'&lt;p&gt;{{template.name}}&lt;/p&gt;'
+	};
+});
+</pre></p>            
+</div>
+</body>
+</html>
+<script src="angular.min.js"></script>
+<script>
+angular.module('myApp', [
+	'appModule'
+]);
+
+angular.module('appModule', []);
+
+angular.module('appModule').component('appModule', {
+    
+	templateUrl: 'template.html',
+	
+    controller: function appModuleController() {
+		
+		this.modulecopy = [
+			{
+			name: 'This content was added using a module'
+			}
+		];
+
+    }
+}).controller('appCtrl', ['$scope', function($scope) {
+	$scope.template = {
+		name: 'This content was added using a directive'
+	};
+}])
+.directive('appDirective', function() {
+	return {
+		template:'<p>{{template.name}}</p>'
+	};
+});
+</script>
